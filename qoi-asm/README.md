@@ -29,3 +29,20 @@ The rust QOI crate is a tiny sliver faster on the photographic tests whilst prod
 I did experiment with vectorized read ahead of "same pixel" runs, which further sped up the non-photographic case but noticeably worsened performance in photographic cases. I eventually reverted this since I could not mitigate the slowdown for photographs (which are the slowest by far to encode).
 
 Whilst it is in general a faster encoder it's probably not fast enough to justify losing portability (and readability) versus the higher level language implementations.
+
+## Speedup Chart
+
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="300">
+  <rect width="560" height="300" fill="#fff"/>
+  <style>text{font-family:sans-serif;font-size:12px}</style>
+  <line x1="280" y1="5" x2="280" y2="295" stroke="#999" stroke-width="1"/>
+  <text x="165" y="23" text-anchor="end">Synthetic</text><rect x="280" y="11" width="107" height="20" fill="#1a7a1a"/><text x="390" y="26">11.7%</text>
+  <text x="165" y="53" text-anchor="end">Dice</text><rect x="280" y="41" width="171" height="20" fill="#1a7a1a"/><text x="454" y="56">18.7%</text>
+  <text x="165" y="83" text-anchor="end">Edgecase</text><rect x="280" y="71" width="240" height="20" fill="#1a7a1a"/><text x="523" y="86">32.8%</text>
+  <text x="165" y="113" text-anchor="end">Kodim10</text><rect x="271" y="101" width="9" height="20" fill="#c0392b"/><text x="258" y="116" text-anchor="end">-1.2%</text>
+  <text x="165" y="143" text-anchor="end">Kodim23</text><rect x="256" y="131" width="24" height="20" fill="#c0392b"/><text x="243" y="146" text-anchor="end">-3.3%</text>
+  <text x="165" y="173" text-anchor="end">Qoi_logo</text><rect x="280" y="161" width="178" height="20" fill="#1a7a1a"/><text x="461" y="176">24.3%</text>
+  <text x="165" y="203" text-anchor="end">testcard</text><rect x="280" y="191" width="134" height="20" fill="#1a7a1a"/><text x="417" y="206">18.3%</text>
+  <text x="165" y="233" text-anchor="end">testcard_rgba</text><rect x="280" y="221" width="125" height="20" fill="#1a7a1a"/><text x="408" y="236">17.1%</text>
+  <text x="165" y="263" text-anchor="end">Wikipedia_009</text><rect x="280" y="251" width="94" height="20" fill="#1a7a1a"/><text x="377" y="266">12.9%</text>
+</svg>
