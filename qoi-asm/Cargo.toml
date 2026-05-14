@@ -1,0 +1,19 @@
+[package]
+name = "qoi-asm"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+qoi = "0.4"
+libc = "0.2"
+
+[build-dependencies]
+cc = "1"
+
+[dev-dependencies]
+criterion = "0.5"
+png = "0.17"
+
+[[bench]]
+name = "encode"
+harness = false
