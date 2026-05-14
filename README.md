@@ -7,3 +7,5 @@ Ergo, archiving some bits of "good stuff" I have collected here for my own futur
 [asmlib](intel/agner-fog-asmlib/asmlib/) Agner Fog's ASM function library for intel, sourced from https://www.agner.org/optimize/#asmlib.
 
 - [commentary on memcpy](intel/agner-fog-asmlib/commentaries/Commentaries%20on%20Memcpy.md) My notes on the implementation of memcpy in the above, highlighting features in the assembly code for my own reference.
+
+[qoi-asm](qoi-asm/README.md) Implementation of the QOI encoder in ASM. It matches the reference encoder output whilst being generally faster.
