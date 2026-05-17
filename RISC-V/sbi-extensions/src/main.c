@@ -22,6 +22,9 @@ extern void sbi_system_reset(long reset_type, long reset_reason);
 #define SBI_EID_SSE 0x535345
 #define SBI_EID_DBTR 0x44425452
 
+/* Legacy Extension IDs */
+#define SBI_EID_LEGACY_CONSOLE_PUTCHAR 0x01
+
 /* SBI SRST reset types */
 #define SBI_SRST_SHUTDOWN 0
 #define SBI_SRST_COLD_REBOOT 1
@@ -73,9 +76,11 @@ void kernel_main(void)
     print_probe("FWFT", SBI_EID_FWFT);
     print_probe("SSE", SBI_EID_SSE);
     print_probe("DBTR", SBI_EID_DBTR);
+    print_probe("Legacy", SBI_EID_LEGACY_CONSOLE_PUTCHAR);
 
     /* Shutdown if SRST is available, otherwise idle */
-    if (sbi_probe_extension(SBI_EID_SRST)) {
+    if (sbi_probe_extension(SBI_EID_SRST))
+    {
         kputs("\nShutting down...\n", 19);
         sbi_system_reset(SBI_SRST_SHUTDOWN, SBI_SRST_REASON_NONE);
     }
