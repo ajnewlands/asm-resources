@@ -10,7 +10,7 @@ typedef unsigned long uint64;
 
 // --- External symbols from assembly ---
 extern void sbi_putchar(int ch);
-extern void sbi_set_timer(uint64 stime_value);
+extern void set_interval_timer(uint64 offset);
 extern void switch_to_task(void);
 
 // --- Timer configuration ---
@@ -18,13 +18,6 @@ extern void switch_to_task(void);
 // QEMU virt machine timer frequency = 10 MHz
 // so 100K ticks => 10ms
 #define TIMER_INTERVAL 100000
-
-static inline uint64 read_time(void)
-{
-    uint64 val;
-    __asm__ volatile("csrr %0, time" : "=r"(val));
-    return val;
-}
 
 // --- Task state ---
 
@@ -57,7 +50,7 @@ void task_print(int ch)
 void schedule(void)
 {
     current_task = (current_task + 1) % NUM_TASKS;
-    sbi_set_timer(read_time() + TIMER_INTERVAL);
+    set_interval_timer(TIMER_INTERVAL);
 }
 
 // --- Kernel entry point ---
@@ -100,7 +93,7 @@ void kernel_main(void)
     current_task = 0;
 
     // Arm the first timer
-    sbi_set_timer(read_time() + TIMER_INTERVAL);
+    set_interval_timer(TIMER_INTERVAL);
 
     // Set SPP=1 (sret -> S-mode) and SPIE=1 (sret -> interrupts enabled)
     __asm__ volatile("csrs sstatus, %0" ::"r"((1 << 8) | (1 << 5)));
